@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataMatch - Find Your Perfect Data Science Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .navbar-brand i {
+            color: var(--accent-color);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+        
+        .tool-card {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 2rem;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .tool-header {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--dark-color);
+        }
+        
+        .tool-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .tool-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-info {
+            padding: 1.5rem;
+        }
+        
+        .compatibility-tag {
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        .feature-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .philosophy-badge {
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            background-color: var(--primary-color);
+            color: white;
+            display: inline-block;
+        }
+        
+        .match-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .match-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: white;
+        }
+        
+        .match-percentage {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        /* Difficulty level indicators */
+        .difficulty {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .difficulty-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+            background-color: #e9ecef;
+        }
+        
+        .difficulty-dot.active {
+            background-color: var(--accent-color);
+        }
+        
+        /* Filter styles */
+        .filter-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .filter-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Modal styles */
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        
+        .modal-title {
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-chart-line"></i> DataMatch</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tools">Browse Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#match">Find Your Match</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1>Find Your Perfect Data Science Tool Match</h1>
+            <p class="lead">Swipe right on the tools that will bring data science into your middle school classroom!</p>
+            <a href="#tools" class="btn btn-light btn-lg mt-3">Start Matching</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Filters Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="filter-section">
+                    <h4 class="filter-title">Find Your Match</h4>
+                    <div class="filter-group">
+                        <div class="filter-label">Grade Level</div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="elementary">
+                            <label class="form-check-label" for="elementary">Elementary</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="middle" checked>
+                            <label class="form-check-label" for="middle">Middle School</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="high">
+                            <label class="form-check-label" for="high">High School</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="higher">
+                            <label class="form-check-label" for="higher">Higher Ed</label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-label">Time Commitment</div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="low-time">
+                            <label class="form-check-label" for="low-time">Low (1-2)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="medium-time">
+                            <label class="form-check-label" for="medium-time">Medium (3)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="high-time">
+                            <label class="form-check-label" for="high-time">High (4-5)</label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-label">Required Coding</div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="no-code" checked>
+                            <label class="form-check-label" for="no-code">No Coding (1)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="some-code">
+                            <label class="form-check-label" for="some-code">Some Coding (2-3)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="advanced-code">
+                            <label class="form-check-label" for="advanced-code">Advanced (4-5)</label>
+                        </div>
+                    </div>
+                    <button class="btn match-btn w-100 mt-3">Apply Filters</button>
+                </div>
+            </div>
+
+            <!-- Tool Cards -->
+            <div class="col-lg-9" id="tools">
+                <h2 class="mb-4">Browse Data Science Tools</h2>
+                <div class="row">
+                    <!-- CODAP -->
+                    <div class="col-md-6">
+                        <div class="card tool-card position-relative">
+                            <div class="match-percentage">92%</div>
+                            <div class="tool-header">
+                                <div class="tool-icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <h3 class="tool-name">CODAP</h3>
+                                <p class="text-muted mb-0">Common Online Data Analysis Platform</p>
+                            </div>
+                            <div class="tool-info">
+                                <div class="mb-3">
+                                    <small class="text-muted">Looking for</small>
+                                    <div>
+                                        <span class="compatibility-tag"><i class="fas fa-school"></i> Middle School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-graduation-cap"></i> High School</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">About me</small>
+                                    <p>I'm a free, intuitive platform that helps students explore and visualize data. I don't require login credentials and I'm passionate about storytelling through data.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">My teaching style</small>
+                                    <div>
+                                        <span class="philosophy-badge"><i class="fas fa-book-open"></i> The Storyteller</span>
+                                        <span class="philosophy-badge"><i class="fas fa-microscope"></i> The Investigator</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Coding knowledge needed</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Teacher time commitment</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn match-btn" data-bs-toggle="modal" data-bs-target="#codapModal">View Full Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Jupyter Everywhere -->
+                    <div class="col-md-6">
+                        <div class="card tool-card position-relative">
+                            <div class="match-percentage">78%</div>
+                            <div class="tool-header">
+                                <div class="tool-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h3 class="tool-name">Jupyter Everywhere</h3>
+                                <p class="text-muted mb-0">Interactive Computing</p>
+                            </div>
+                            <div class="tool-info">
+                                <div class="mb-3">
+                                    <small class="text-muted">Looking for</small>
+                                    <div>
+                                        <span class="compatibility-tag"><i class="fas fa-school"></i> Middle School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-graduation-cap"></i> High School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-university"></i> Higher Ed</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">About me</small>
+                                    <p>I'm a free, powerful platform for those ready to dive into coding. I support Python and offer a balance of coding and data analysis features.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">My teaching style</small>
+                                    <div>
+                                        <span class="philosophy-badge"><i class="fas fa-laptop-code"></i> The Coder</span>
+                                        <span class="philosophy-badge"><i class="fas fa-microscope"></i> The Investigator</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Coding knowledge needed</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Teacher time commitment</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn match-btn" data-bs-toggle="modal" data-bs-target="#jupyterModal">View Full Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Sheets -->
+                    <div class="col-md-6">
+                        <div class="card tool-card position-relative">
+                            <div class="match-percentage">85%</div>
+                            <div class="tool-header">
+                                <div class="tool-icon">
+                                    <i class="fas fa-table"></i>
+                                </div>
+                                <h3 class="tool-name">Google Sheets</h3>
+                                <p class="text-muted mb-0">Collaborative Spreadsheets</p>
+                            </div>
+                            <div class="tool-info">
+                                <div class="mb-3">
+                                    <small class="text-muted">Looking for</small>
+                                    <div>
+                                        <span class="compatibility-tag"><i class="fas fa-school"></i> Middle School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-graduation-cap"></i> High School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-university"></i> Higher Ed</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">About me</small>
+                                    <p>I'm accessible, collaborative, and integrate perfectly with Google Classroom. I support a variety of teaching styles and data tasks.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">My teaching style</small>
+                                    <div>
+                                        <span class="philosophy-badge"><i class="fas fa-puzzle-piece"></i> The Problem Solver</span>
+                                        <span class="philosophy-badge"><i class="fas fa-laptop-code"></i> The Coder</span>
+                                        <span class="philosophy-badge"><i class="fas fa-microscope"></i> The Investigator</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Coding knowledge needed</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Teacher time commitment</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn match-btn" data-bs-toggle="modal" data-bs-target="#sheetsModal">View Full Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Excel -->
+                    <div class="col-md-6">
+                        <div class="card tool-card position-relative">
+                            <div class="match-percentage">82%</div>
+                            <div class="tool-header">
+                                <div class="tool-icon">
+                                    <i class="fas fa-file-excel"></i>
+                                </div>
+                                <h3 class="tool-name">Excel</h3>
+                                <p class="text-muted mb-0">Powerful Spreadsheet Analysis</p>
+                            </div>
+                            <div class="tool-info">
+                                <div class="mb-3">
+                                    <small class="text-muted">Looking for</small>
+                                    <div>
+                                        <span class="compatibility-tag"><i class="fas fa-school"></i> Middle School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-graduation-cap"></i> High School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-university"></i> Higher Ed</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">About me</small>
+                                    <p>I'm the industry standard with both free and paid options. I integrate with most LMS platforms and provide powerful data analysis tools.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">My teaching style</small>
+                                    <div>
+                                        <span class="philosophy-badge"><i class="fas fa-laptop-code"></i> The Coder</span>
+                                        <span class="philosophy-badge"><i class="fas fa-microscope"></i> The Investigator</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Coding knowledge needed</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Teacher time commitment</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn match-btn" data-bs-toggle="modal" data-bs-target="#excelModal">View Full Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KNIME -->
+                    <div class="col-md-6">
+                        <div class="card tool-card position-relative">
+                            <div class="match-percentage">70%</div>
+                            <div class="tool-header">
+                                <div class="tool-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <h3 class="tool-name">KNIME</h3>
+                                <p class="text-muted mb-0">Visual Workflow Platform</p>
+                            </div>
+                            <div class="tool-info">
+                                <div class="mb-3">
+                                    <small class="text-muted">Looking for</small>
+                                    <div>
+                                        <span class="compatibility-tag"><i class="fas fa-graduation-cap"></i> High School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-university"></i> Higher Ed</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">About me</small>
+                                    <p>I offer a visual approach to data science workflows. I'm completely free but have a steeper learning curve for teachers.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">My teaching style</small>
+                                    <div>
+                                        <span class="philosophy-badge"><i class="fas fa-laptop-code"></i> The Coder</span>
+                                        <span class="philosophy-badge"><i class="fas fa-microscope"></i> The Investigator</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Coding knowledge needed</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Teacher time commitment</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn match-btn" data-bs-toggle="modal" data-bs-target="#knimeModal">View Full Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slow Reveal Graph -->
+                    <div class="col-md-6">
+                        <div class="card tool-card position-relative">
+                            <div class="match-percentage">95%</div>
+                            <div class="tool-header">
+                                <div class="tool-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3 class="tool-name">Slow Reveal Graph</h3>
+                                <p class="text-muted mb-0">Gradual Data Visualization</p>
+                            </div>
+                            <div class="tool-info">
+                                <div class="mb-3">
+                                    <small class="text-muted">Looking for</small>
+                                    <div>
+                                        <span class="compatibility-tag"><i class="fas fa-child"></i> Elementary</span>
+                                        <span class="compatibility-tag"><i class="fas fa-school"></i> Middle School</span>
+                                        <span class="compatibility-tag"><i class="fas fa-graduation-cap"></i> High School</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">About me</small>
+                                    <p>I'm the easiest tool to implement with minimal preparation. I focus on visualization and storytelling across curriculum areas.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">My teaching style</small>
+                                    <div>
+                                        <span class="philosophy-badge"><i class="fas fa-book-open"></i> The Storyteller</span>
+                                        <span class="philosophy-badge"><i class="fas fa-puzzle-piece"></i> The Interdisciplinary Partner</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Coding knowledge needed</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">Teacher time commitment</small>
+                                    <div class="difficulty">
+                                        <div class="difficulty-dot active"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                        <div class="difficulty-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn match-btn" data-bs-toggle="modal" data-bs-target="#slowRevealModal">View Full Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="bg-light py-5" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="mb-4">Why DataMatch?</h2>
+                    <p class="lead mb-5">Finding the right data science tools for your middle school classroom shouldn't be complicated. DataMatch helps you discover tools that match your teaching style, time constraints, and classroom needs.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 text-center mb-4">
+                    <div class="rounded-circle bg-primary text-white d-inline-flex p-3 mb-3">
+                        <i class="fas fa-clock fa-2x"></i>
+                    </div>
+                    <h4>Save Time</h4>
+                    <p>Quickly find tools that fit your schedule and preparation time constraints.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="rounded-circle bg-primary text-white d-inline-flex p-3 mb-3">
+                        <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                    </div>
+                    <h4>Match Your Style</h4>
+                    <p>Discover tools that align with your teaching philosophy and classroom approach.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="rounded-circle bg-primary text-white d-inline-flex p-3 mb-3">
+                        <i class="fas fa-laptop fa-2x"></i>
+                    </div>
+                    <h4>Real Compatibility</h4>
+                    <p>Find tools that work with your school's technology infrastructure and student needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Find Your Match Quiz Section -->
+    <section class="py-5" id="match">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="mb-4">Find Your Perfect Match</h2>
+                    <p class="lead mb-4">Answer a few questions about your classroom needs and teaching style to get personalized tool recommendations.</p>
+                    <button class="btn btn-lg match-btn" data-bs-toggle="modal" data-bs-target="#quizModal">Take the Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>DataMatch</h4>
+                    <p>Helping teachers find their perfect data science tool match since 2025.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Home</a></li>
+                        <li><a href="#tools" class="text-light">Browse Tools</a></li>
+                        <li><a href="#match" class="text-light">Find Your Match</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <p>Questions or suggestions? Reach out to us!</p>
+                    <a href="mailto:info@datamatch.edu" class="text-light">info@datamatch.edu</a>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">&copy; 2025 DataMatch. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tool Detail Modals -->
+    <!-- CODAP Modal -->
+    <div class="modal fade" id="codapModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">CODAP - Complete Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="tool-icon mx-auto">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <h3 class="mt-3">CODAP</h3>
+                            <p class="text-muted">Common Online Data Analysis Platform</p>
+                            <div class="mt-3">
+                                <a href="https://codap.concord.org/" target="_blank" class="btn match-btn">Visit Website</a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h4>About Me</h4>
+                            <p>I'm an interactive web-based data analysis platform designed to help students explore data through a visual interface. I make it easy to import, visualize, and analyze data without requiring coding knowledge.</p>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <h5>Basic Info</h5>
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Grade Levels
+                                            <span>Middle School, High School</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Student Login Required
+                                            <span>No</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Cost
+                                            <span>Completely Free</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            LMS Integration
+                                            <span>None</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Implementation</h5>
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Coding Knowledge
+                                            <span>1/5 (Minimal)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Teacher Time Commitment
+                                            <span>2/5 (Low)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Prep Time for Lessons
+                                            <span>2/5 (Low)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Student Data Collection
+                                            <span>None</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5>Teaching Philosophy</h5>
+                                <div>
+                                    <span class="philosophy-badge"><i class="fas fa-book-open"></i> The Storyteller</span>
+                                    <span class="philosophy-badge"><i class="fas fa-microscope"></i> The Investigator</span>
+                                </div>
+                                <p class="mt-2">I focus on data visualization, storytelling, and scientific investigation, helping students create compelling narratives from data while guiding them through the process of asking questions and drawing conclusions.</p>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5>Data Science Skills Supported</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Filtering / Sorting / Grouping</li>
+                                    <li class="list-group-item">Analysis</li>
+                                    <li class="list-group-item">Visualization</li>
+                                    <li class="list-group-item">Communication</li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5>My Strengths</h5>
+                                <ul>
+                                    <li>Provides a wide range of real, authentic datasets for students to explore</li>
+                                    <li>Intuitive and visually engaging user interface</li>
+                                    <li>Aligns with national and state educational standards (e.g., NGSS, CSTA)</li>
+                                    <li>Supports cross-disciplinary subject integration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="https://codap.concord.org/" target="_blank" class="btn match-btn">Visit Website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jupyter Everywhere Modal -->
+    <div class="modal fade" id="jupyterModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Jupyter Everywhere - Complete Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4">
+                            <div class="tool-icon mx-auto">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 class="mt-3">Jupyter Everywhere</h3>
+                            <p class="text-muted">Interactive Computing</p>
+                            <div class="mt-3">
+                                <a href="https://jupyter.org/" target="_blank" class="btn match-btn">Visit Website</a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h4>About Me</h4>
+                            <p>I'm an interactive computing platform that combines code, visualizations, and narrative text in a single document. I'm perfect for teachers who want to introduce students to coding in the context of data science.</p>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <h5>Basic Info</h5>
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Grade Levels
+                                            <span>Middle School, High School, Higher Ed</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Student Login Required
+                                            <span>No</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Cost
+                                            <span>Completely Free</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            LMS Integration
+                                            <span>None</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Implementation</h5>
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Coding Knowledge
+                                            <span>3/5 (Moderate)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Teacher Time Commitment
+                                            <span>3/5 (Moderate)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Prep Time for Lessons
+                                            <span>4/5 (High)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Student Data Collection
+                                            <span>None</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5>Teaching Philosophy</h5>
+                                <div>
+                                    <span class="philosophy-badge"><i class="fas fa-laptop-code"></i> The Coder</span>
+                                    <span class="philosophy-badge"><i class="fas fa-microscope"></i> The Investigator</span>
+                                </div>
+                                <p class="mt-2">I teach data science through programming languages like Python, emphasizing computational thinking and scientific investigation. I guide students through asking questions, coding solutions, and drawing conclusions.</p>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5>Data Science Skills Supported</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Cleaning</li>
+                                    <li class="list-group-item">Filtering / Sorting / Grouping</li>
+                                    <li class="list-group-item">Coding</li>
+                                    <li class="list-group-item">Analysis</li>
+                                    <li class="list-group-item">Visualization</li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5>My Strengths</h5>
+                                <ul>
+                                    <li>Intuitive and visually engaging user interface</li>
+                                    <li>Supports a wide range of programming languages</li>
+                                    <li>Allows for narrative text alongside code</li>
+                                    <li>Industry-standard tool used by data scientists</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="https://jupyter.org/" target="_blank" class="btn match-btn">Visit Website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- More modals would go here for other tools -->
+
+    <!-- Quiz Modal -->
+    <div class="modal fade" id="quizModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Find Your Perfect Match</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="quiz-container">
+                        <div class="quiz-progress mb-4">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">1/5</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-question" id="question-1">
+                            <h4>1. What grade level do you teach?</h4>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="q1-elementary">
+                                <label class="form-check-label" for="q1-elementary">Elementary School</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="q1-middle" checked>
+                                <label class="form-check-label" for="q1-middle">Middle School</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="q1-high">
+                                <label class="form-check-label" for="q1-high">High School</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="q1-higher">
+                                <label class="form-check-label" for="q1-higher">Higher Education</label>
+                            </div>
+                        </div>
+                        
+                        <!-- More questions would be added here -->
+                        
+                        <div class="mt-4 text-center">
+                            <button class="btn match-btn">Next Question</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple JavaScript to handle the quiz progression would go here
+        // This is just a mockup, so we're not implementing full functionality
+    </script>
+</body>
+</html>
