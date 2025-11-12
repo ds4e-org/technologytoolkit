@@ -12,7 +12,7 @@
   gtag('config', 'G-9YFV97LR4S');
 </script>
     
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataMatch - Find Your Perfect Data Science Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -158,6 +158,7 @@
             font-weight: bold;
             font-size: 1.1rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: none; /* Hidden by default until quiz is taken */
         }
         
         .footer {
@@ -246,6 +247,12 @@
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
+        
+        /* Find Your Match section */
+        .find-match-section {
+            background-color: #f5f7fa;
+            padding: 4rem 0;
+        }
     </style>
 </head>
 <body>
@@ -262,9 +269,6 @@
                         <a class="nav-link active" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#tools">Browse Tools</a>
                     </li>
                     <li class="nav-item">
@@ -279,8 +283,8 @@
     <section class="hero">
         <div class="container text-center">
             <h1>Find Your Perfect Data Science Tool Match</h1>
-            <p class="lead">Swipe right on the tools that will bring data science into your middle school classroom!</p>
-            <a href="#tools" class="btn btn-light btn-lg mt-3">Start Matching</a>
+            <p class="lead mb-4">Swipe right on the tools that will bring data science into your middle school classroom!</p>
+            <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#quizModal">Take the Quiz</button>
         </div>
     </section>
 
@@ -298,7 +302,7 @@
                             <label class="form-check-label" for="elementary">Elementary</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input filter-check" type="checkbox" value="middle" id="middle" checked>
+                            <input class="form-check-input filter-check" type="checkbox" value="middle" id="middle">
                             <label class="form-check-label" for="middle">Middle School</label>
                         </div>
                         <div class="form-check">
@@ -313,7 +317,7 @@
                     <div class="filter-group">
                         <div class="filter-label">Time Commitment</div>
                         <div class="form-check">
-                            <input class="form-check-input filter-check" type="checkbox" value="low" id="low-time" checked>
+                            <input class="form-check-input filter-check" type="checkbox" value="low" id="low-time">
                             <label class="form-check-label" for="low-time">Low (1-2)</label>
                         </div>
                         <div class="form-check">
@@ -328,7 +332,7 @@
                     <div class="filter-group">
                         <div class="filter-label">Required Coding</div>
                         <div class="form-check">
-                            <input class="form-check-input filter-check" type="checkbox" value="no-code" id="no-code" checked>
+                            <input class="form-check-input filter-check" type="checkbox" value="no-code" id="no-code">
                             <label class="form-check-label" for="no-code">No Coding (1)</label>
                         </div>
                         <div class="form-check">
@@ -735,43 +739,8 @@
         </div>
     </div>
 
-    <!-- About Section -->
-    <section class="bg-light py-5" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h2 class="mb-4">Why DataMatch?</h2>
-                    <p class="lead mb-5">Finding the right data science tools for your middle school classroom shouldn't be complicated. DataMatch helps you discover tools that match your teaching style, time constraints, and classroom needs.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 text-center mb-4">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex p-3 mb-3">
-                        <i class="fas fa-clock fa-2x"></i>
-                    </div>
-                    <h4>Save Time</h4>
-                    <p>Quickly find tools that fit your schedule and preparation time constraints.</p>
-                </div>
-                <div class="col-md-4 text-center mb-4">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex p-3 mb-3">
-                        <i class="fas fa-chalkboard-teacher fa-2x"></i>
-                    </div>
-                    <h4>Match Your Style</h4>
-                    <p>Discover tools that align with your teaching philosophy and classroom approach.</p>
-                </div>
-                <div class="col-md-4 text-center mb-4">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex p-3 mb-3">
-                        <i class="fas fa-laptop fa-2x"></i>
-                    </div>
-                    <h4>Real Compatibility</h4>
-                    <p>Find tools that work with your school's technology infrastructure and student needs.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Find Your Match Quiz Section -->
-    <section class="py-5" id="match">
+    <!-- Find Your Match Section -->
+    <section class="find-match-section py-5" id="match">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
@@ -802,7 +771,7 @@
                 <div class="col-md-3">
                     <h5>Contact</h5>
                     <p>Questions or suggestions? Reach out to us!</p>
-                    <a href="mailto:hkurzweil@uchicago.edu" class="text-light">hkurzweil@uchicago.edu</a>
+                    <a href="mailto:info@datamatch.edu" class="text-light">info@datamatch.edu</a>
                 </div>
             </div>
             <hr class="bg-light">
@@ -1668,6 +1637,11 @@
             const applyFilters = document.getElementById('applyFilters');
             if (applyFilters) {
                 applyFilters.addEventListener('click', function() {
+                    // Show all match percentages when filters are applied
+                    document.querySelectorAll('.match-percentage').forEach(el => {
+                        el.style.display = 'flex';
+                    });
+                    
                     // Get checked filters
                     const gradeChecks = {
                         elementary: document.getElementById('elementary').checked,
@@ -1688,66 +1662,98 @@
                         advancedCode: document.getElementById('advanced-code').checked
                     };
                     
+                    // Check if any filters are selected
+                    const anyGradeSelected = gradeChecks.elementary || gradeChecks.middle || gradeChecks.high || gradeChecks.higher;
+                    const anyTimeSelected = timeCheck.low || timeCheck.medium || timeCheck.high;
+                    const anyCodeSelected = codeCheck.noCode || codeCheck.someCode || codeCheck.advancedCode;
+                    
                     // Get all tool cards
                     const toolCards = document.querySelectorAll('.tool-card-container');
                     
                     // For each card, check if it matches the filter criteria
                     toolCards.forEach(card => {
-                        let showCard = false;
+                        let showCard = true;
                         
-                        // Check grade level filter
-                        const cardElementary = card.getAttribute('data-elementary') === 'true';
-                        const cardMiddle = card.getAttribute('data-middle') === 'true';
-                        const cardHigh = card.getAttribute('data-high') === 'true';
-                        const cardHigher = card.getAttribute('data-higher') === 'true';
+                        // Check grade level filter if any are selected
+                        if (anyGradeSelected) {
+                            const cardElementary = card.getAttribute('data-elementary') === 'true';
+                            const cardMiddle = card.getAttribute('data-middle') === 'true';
+                            const cardHigh = card.getAttribute('data-high') === 'true';
+                            const cardHigher = card.getAttribute('data-higher') === 'true';
+                            
+                            const gradeMatch = 
+                                (gradeChecks.elementary && cardElementary) ||
+                                (gradeChecks.middle && cardMiddle) ||
+                                (gradeChecks.high && cardHigh) ||
+                                (gradeChecks.higher && cardHigher);
+                                
+                            if (!gradeMatch) showCard = false;
+                        }
                         
-                        const gradeMatch = 
-                            (gradeChecks.elementary && cardElementary) ||
-                            (gradeChecks.middle && cardMiddle) ||
-                            (gradeChecks.high && cardHigh) ||
-                            (gradeChecks.higher && cardHigher);
-                            
-                        // Check time commitment filter
-                        const cardTime = parseInt(card.getAttribute('data-time'));
-                        const timeMatch = 
-                            (timeCheck.low && cardTime <= 2) ||
-                            (timeCheck.medium && cardTime === 3) ||
-                            (timeCheck.high && cardTime >= 4);
-                            
-                        // Check coding knowledge filter
-                        const cardCoding = parseInt(card.getAttribute('data-coding'));
-                        const codingMatch = 
-                            (codeCheck.noCode && cardCoding === 1) ||
-                            (codeCheck.someCode && (cardCoding === 2 || cardCoding === 3)) ||
-                            (codeCheck.advancedCode && cardCoding >= 4);
-                            
-                        // Card must match all selected filters
-                        if (gradeMatch && timeMatch && codingMatch) {
-                            showCard = true;
-                            
+                        // Check time commitment filter if any are selected
+                        if (anyTimeSelected && showCard) {
+                            const cardTime = parseInt(card.getAttribute('data-time'));
+                            const timeMatch = 
+                                (timeCheck.low && cardTime <= 2) ||
+                                (timeCheck.medium && cardTime === 3) ||
+                                (timeCheck.high && cardTime >= 4);
+                                
+                            if (!timeMatch) showCard = false;
+                        }
+                        
+                        // Check coding knowledge filter if any are selected
+                        if (anyCodeSelected && showCard) {
+                            const cardCoding = parseInt(card.getAttribute('data-coding'));
+                            const codingMatch = 
+                                (codeCheck.noCode && cardCoding === 1) ||
+                                (codeCheck.someCode && (cardCoding === 2 || cardCoding === 3)) ||
+                                (codeCheck.advancedCode && cardCoding >= 4);
+                                
+                            if (!codingMatch) showCard = false;
+                        }
+                        
+                        // If card passes all filters, calculate match percentage
+                        if (showCard) {
                             // Calculate match percentage based on filter matches
                             let matchPercentage = 70; // Base percentage
                             
                             // Adjust based on exact matches
-                            if ((gradeChecks.elementary && cardElementary) || 
-                                (gradeChecks.middle && cardMiddle)) {
-                                matchPercentage += 10;
+                            if (anyGradeSelected) {
+                                if ((gradeChecks.elementary && card.getAttribute('data-elementary') === 'true') || 
+                                    (gradeChecks.middle && card.getAttribute('data-middle') === 'true')) {
+                                    matchPercentage += 10;
+                                }
                             }
                             
-                            if ((timeCheck.low && cardTime === 1) || 
-                                (codeCheck.noCode && cardCoding === 1)) {
-                                matchPercentage += 15;
+                            if (anyTimeSelected) {
+                                const cardTime = parseInt(card.getAttribute('data-time'));
+                                if ((timeCheck.low && cardTime === 1) || 
+                                    (timeCheck.medium && cardTime === 3) ||
+                                    (timeCheck.high && cardTime === 4)) {
+                                    matchPercentage += 10;
+                                }
+                            }
+                            
+                            if (anyCodeSelected) {
+                                const cardCoding = parseInt(card.getAttribute('data-coding'));
+                                if ((codeCheck.noCode && cardCoding === 1) ||
+                                    (codeCheck.someCode && cardCoding === 2) ||
+                                    (codeCheck.advancedCode && cardCoding === 4)) {
+                                    matchPercentage += 10;
+                                }
                             }
                             
                             // For Slow Reveal Graph - special high match for low time commitment and elementary/middle compatibility
                             if (card.querySelector('.tool-name').textContent === 'Slow Reveal Graph' &&
-                                timeCheck.low && (gradeChecks.elementary || gradeChecks.middle)) {
+                                ((anyTimeSelected && timeCheck.low) || !anyTimeSelected) && 
+                                ((anyGradeSelected && (gradeChecks.elementary || gradeChecks.middle)) || !anyGradeSelected)) {
                                 matchPercentage = 95;
                             }
                             
                             // For CODAP - special high match for storyteller approach
                             if (card.querySelector('.tool-name').textContent === 'CODAP' &&
-                                (codeCheck.noCode && (gradeChecks.middle || gradeChecks.high))) {
+                                ((anyCodeSelected && codeCheck.noCode) || !anyCodeSelected) && 
+                                ((anyGradeSelected && (gradeChecks.middle || gradeChecks.high)) || !anyGradeSelected)) {
                                 matchPercentage = 92;
                             }
                             
@@ -1829,6 +1835,11 @@
             });
             
             document.getElementById('find-match')?.addEventListener('click', function() {
+                // Show match percentages after quiz is completed
+                document.querySelectorAll('.match-percentage').forEach(el => {
+                    el.style.display = 'flex';
+                });
+                
                 // Hide all questions and show result
                 quizQuestions.forEach(q => q.classList.remove('active'));
                 quizResult.style.display = 'block';
