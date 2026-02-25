@@ -1943,104 +1943,91 @@
 <!-- ═══════════════════════════════════════════════
      SCRIPTS
 ═══════════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
   // ── Chip toggle ──
-  document.querySelectorAll('.filter-chip').forEach(chip => {
+  document.querySelectorAll('.filter-chip').forEach(function(chip) {
     chip.addEventListener('click', function () {
       this.classList.toggle('active');
     });
   });
 
-  // ── Flame display helper ──
+  // ── Show/hide flame badge ──
   function setFlame(card, score) {
-    const badge = card.querySelector('.flame-badge');
+    var badge = card.querySelector('.flame-badge');
     if (!badge) return;
     if (score >= 90) {
       badge.textContent = '🔥🔥🔥';
-      badge.style.display = 'block';
     } else if (score >= 75) {
       badge.textContent = '🔥🔥';
-      badge.style.display = 'block';
     } else {
       badge.textContent = '🔥';
-      badge.style.display = 'block';
     }
+    badge.style.display = 'block';
   }
 
   function hideFlame(card) {
-    const badge = card.querySelector('.flame-badge');
+    var badge = card.querySelector('.flame-badge');
     if (badge) badge.style.display = 'none';
   }
 
-  // ── Score calculation ──
-  function calcScore(card, filters) {
-    let score = 60;
+  // ── Match score ──
+  function calcScore(card, grades, times, codings) {
+    var score = 60;
 
-    // Grade match
-    if (filters.grades.length > 0) {
-      const gradeMatch = filters.grades.some(g => card.getAttribute('data-' + g) === 'true');
-      if (gradeMatch) score += 15;
-    } else {
-      score += 10; // neutral when no filter
-    }
+    if (grades.length > 0) {
+      var gradeHit = grades.some(function(g) { return card.getAttribute('data-' + g) === 'true'; });
+      if (gradeHit) score += 15;
+    } else { score += 10; }
 
-    // Time match
-    const cardTime = parseInt(card.getAttribute('data-time'));
-    if (filters.times.length > 0) {
-      const timeMatch = filters.times.some(t => {
+    var cardTime = parseInt(card.getAttribute('data-time'), 10);
+    if (times.length > 0) {
+      var timeHit = times.some(function(t) {
         if (t === 'low') return cardTime <= 2;
         if (t === 'medium') return cardTime === 3;
         if (t === 'high') return cardTime >= 4;
+        return false;
       });
-      if (timeMatch) score += 15;
-    } else {
-      score += 10;
-    }
+      if (timeHit) score += 15;
+    } else { score += 10; }
 
-    // Coding match
-    const cardCoding = parseInt(card.getAttribute('data-coding'));
-    if (filters.codings.length > 0) {
-      const codeMatch = filters.codings.some(c => {
+    var cardCoding = parseInt(card.getAttribute('data-coding'), 10);
+    if (codings.length > 0) {
+      var codeHit = codings.some(function(c) {
         if (c === 'no-code') return cardCoding === 1;
         if (c === 'some-code') return cardCoding === 2 || cardCoding === 3;
         if (c === 'advanced-code') return cardCoding >= 4;
+        return false;
       });
-      if (codeMatch) score += 15;
-    } else {
-      score += 10;
-    }
+      if (codeHit) score += 15;
+    } else { score += 10; }
 
     return Math.min(score, 99);
   }
 
-  // ── Apply Filters ──
-  document.getElementById('applyFilters').addEventListener('click', applyFilters);
+  // ── Run filters (named differently from the button ID) ──
+  function runFilter() {
+    var grades  = Array.prototype.slice.call(document.querySelectorAll('.filter-chip.active[data-filter="grade"]')).map(function(b){ return b.getAttribute('data-value'); });
+    var times   = Array.prototype.slice.call(document.querySelectorAll('.filter-chip.active[data-filter="time"]')).map(function(b){ return b.getAttribute('data-value'); });
+    var codings = Array.prototype.slice.call(document.querySelectorAll('.filter-chip.active[data-filter="coding"]')).map(function(b){ return b.getAttribute('data-value'); });
 
-  function applyFilters() {
-    const grades  = [...document.querySelectorAll('.filter-chip.active[data-filter="grade"]')].map(b => b.dataset.value);
-    const times   = [...document.querySelectorAll('.filter-chip.active[data-filter="time"]')].map(b => b.dataset.value);
-    const codings = [...document.querySelectorAll('.filter-chip.active[data-filter="coding"]')].map(b => b.dataset.value);
+    var hasFilters = grades.length > 0 || times.length > 0 || codings.length > 0;
+    var cards = document.querySelectorAll('.tool-card-wrapper');
+    var visibleCount = 0;
 
-    const hasFilters = grades.length || times.length || codings.length;
-    const filters = { grades, times, codings };
-
-    const cards = document.querySelectorAll('.tool-card-wrapper');
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-      let show = true;
+    cards.forEach(function(card) {
+      var show = true;
 
       if (grades.length > 0) {
-        const gradeOk = grades.some(g => card.getAttribute('data-' + g) === 'true');
+        var gradeOk = grades.some(function(g) { return card.getAttribute('data-' + g) === 'true'; });
         if (!gradeOk) show = false;
       }
 
-      if (times.length > 0 && show) {
-        const cardTime = parseInt(card.getAttribute('data-time'));
-        const timeOk = times.some(t => {
+      if (show && times.length > 0) {
+        var cardTime = parseInt(card.getAttribute('data-time'), 10);
+        var timeOk = times.some(function(t) {
           if (t === 'low') return cardTime <= 2;
           if (t === 'medium') return cardTime === 3;
           if (t === 'high') return cardTime >= 4;
@@ -2049,9 +2036,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!timeOk) show = false;
       }
 
-      if (codings.length > 0 && show) {
-        const cardCoding = parseInt(card.getAttribute('data-coding'));
-        const codeOk = codings.some(c => {
+      if (show && codings.length > 0) {
+        var cardCoding = parseInt(card.getAttribute('data-coding'), 10);
+        var codeOk = codings.some(function(c) {
           if (c === 'no-code') return cardCoding === 1;
           if (c === 'some-code') return cardCoding === 2 || cardCoding === 3;
           if (c === 'advanced-code') return cardCoding >= 4;
@@ -2065,8 +2052,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (show) {
         visibleCount++;
         if (hasFilters) {
-          const score = calcScore(card, filters);
-          setFlame(card, score);
+          setFlame(card, calcScore(card, grades, times, codings));
         } else {
           hideFlame(card);
         }
@@ -2075,20 +2061,36 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // No results state
-    document.getElementById('no-results').style.display = visibleCount === 0 ? 'block' : 'none';
+    var noResults = document.getElementById('no-results');
+    if (noResults) noResults.style.display = visibleCount === 0 ? 'block' : 'none';
 
-    // Results summary
-    const summary = document.getElementById('results-summary');
-    if (hasFilters) {
-      summary.style.display = 'block';
-      summary.innerHTML = `<i class="fas fa-filter me-2"></i>Showing <strong>${visibleCount}</strong> of <strong>${cards.length}</strong> tools — 🔥🔥🔥 = Best match &nbsp;|&nbsp; 🔥🔥 = Good match &nbsp;|&nbsp; 🔥 = Partial match`;
-    } else {
-      summary.style.display = 'none';
+    var summary = document.getElementById('results-summary');
+    if (summary) {
+      if (hasFilters) {
+        summary.style.display = 'block';
+        summary.innerHTML = '<i class="fas fa-filter me-2"></i>Showing <strong>' + visibleCount + '</strong> of <strong>' + cards.length + '</strong> tools \u2014 \uD83D\uDD25\uD83D\uDD25\uD83D\uDD25 = Best match &nbsp;|&nbsp; \uD83D\uDD25\uD83D\uDD25 = Good match &nbsp;|&nbsp; \uD83D\uDD25 = Partial match';
+      } else {
+        summary.style.display = 'none';
+      }
     }
   }
 
-  // ── Clear Filters ──
+  // ── Wire up buttons ──
+  document.getElementById('applyFilters').addEventListener('click', runFilter);
+
   document.getElementById('clearFilters').addEventListener('click', function () {
-    document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
-    document.querySelectorAll('.tool-card-wrapper').forEach(card
+    document.querySelectorAll('.filter-chip').forEach(function(chip) {
+      chip.classList.remove('active');
+    });
+    document.querySelectorAll('.tool-card-wrapper').forEach(function(card) {
+      card.style.display = '';
+      hideFlame(card);
+    });
+    var noResults = document.getElementById('no-results');
+    if (noResults) noResults.style.display = 'none';
+    var summary = document.getElementById('results-summary');
+    if (summary) summary.style.display = 'none';
+  });
+
+});
+</script>
