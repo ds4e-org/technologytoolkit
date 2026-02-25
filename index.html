@@ -104,14 +104,13 @@
     user-select: none;
     white-space: nowrap;
   }
-  .filter-chip input[type="checkbox"] { display: none; }
-  .filter-chip.active, .filter-chip:has(input:checked) {
+  .filter-chip.active {
     background: var(--primary);
     border-color: var(--primary);
     color: white;
   }
   .filter-chip:hover { border-color: var(--primary); color: var(--primary); }
-  .filter-chip.active:hover, .filter-chip:has(input:checked):hover { opacity: 0.9; color: white; }
+  .filter-chip.active:hover { opacity: 0.9; color: white; }
 
   .apply-btn {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -353,52 +352,22 @@
 <div class="filter-toolbar">
   <div class="container">
     <span class="filter-group-label">Grade</span>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="grade" value="elementary" id="f-elementary">
-      Elementary
-    </label>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="grade" value="middle" id="f-middle">
-      Middle School
-    </label>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="grade" value="high" id="f-high">
-      High School
-    </label>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="grade" value="higher" id="f-higher">
-      Higher Ed
-    </label>
+    <button class="filter-chip" data-filter="grade" data-value="elementary">Elementary</button>
+    <button class="filter-chip" data-filter="grade" data-value="middle">Middle School</button>
+    <button class="filter-chip" data-filter="grade" data-value="high">High School</button>
+    <button class="filter-chip" data-filter="grade" data-value="higher">Higher Ed</button>
 
     <div class="filter-separator"></div>
-    <span class="filter-group-label">Time</span>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="time" value="low" id="f-low-time">
-      Low (1–2)
-    </label>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="time" value="medium" id="f-medium-time">
-      Medium (3)
-    </label>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="time" value="high" id="f-high-time">
-      High (4–5)
-    </label>
+    <span class="filter-group-label">Time Commitment</span>
+    <button class="filter-chip" data-filter="time" data-value="low">Low (1–2)</button>
+    <button class="filter-chip" data-filter="time" data-value="medium">Medium (3)</button>
+    <button class="filter-chip" data-filter="time" data-value="high">High (4–5)</button>
 
     <div class="filter-separator"></div>
     <span class="filter-group-label">Coding</span>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="coding" value="no-code" id="f-no-code">
-      No Coding
-    </label>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="coding" value="some-code" id="f-some-code">
-      Some Coding
-    </label>
-    <label class="filter-chip">
-      <input class="filter-check" type="checkbox" data-filter="coding" value="advanced-code" id="f-adv-code">
-      Advanced
-    </label>
+    <button class="filter-chip" data-filter="coding" data-value="no-code">No Coding</button>
+    <button class="filter-chip" data-filter="coding" data-value="some-code">Some Coding</button>
+    <button class="filter-chip" data-filter="coding" data-value="advanced-code">Advanced</button>
 
     <button class="clear-btn ms-2" id="clearFilters">Clear</button>
     <button class="apply-btn" id="applyFilters">Apply Filters</button>
@@ -1978,6 +1947,13 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
+  // ── Chip toggle ──
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', function () {
+      this.classList.toggle('active');
+    });
+  });
+
   // ── Flame display helper ──
   function setFlame(card, score) {
     const badge = card.querySelector('.flame-badge');
@@ -2044,9 +2020,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('applyFilters').addEventListener('click', applyFilters);
 
   function applyFilters() {
-    const grades   = [...document.querySelectorAll('input[data-filter="grade"]:checked')].map(i => i.value);
-    const times    = [...document.querySelectorAll('input[data-filter="time"]:checked')].map(i => i.value);
-    const codings  = [...document.querySelectorAll('input[data-filter="coding"]:checked')].map(i => i.value);
+    const grades  = [...document.querySelectorAll('.filter-chip.active[data-filter="grade"]')].map(b => b.dataset.value);
+    const times   = [...document.querySelectorAll('.filter-chip.active[data-filter="time"]')].map(b => b.dataset.value);
+    const codings = [...document.querySelectorAll('.filter-chip.active[data-filter="coding"]')].map(b => b.dataset.value);
 
     const hasFilters = grades.length || times.length || codings.length;
     const filters = { grades, times, codings };
@@ -2114,5 +2090,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── Clear Filters ──
   document.getElementById('clearFilters').addEventListener('click', function () {
-    document.querySelectorAll('.filter-chip input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
     document.querySelectorAll('.tool-card-wrapper').forEach(card
