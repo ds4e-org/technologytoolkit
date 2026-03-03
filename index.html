@@ -10,10 +10,11 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DataMatch - Find Your Perfect Data Science Tool</title>
+<!-- FIX 1: Switched to Inter — highly legible at all sizes -->
+<title>DataToolTechMatch - Find Your Perfect Data Science Tool</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --primary: #4e54c8;
@@ -24,10 +25,13 @@
     --card-shadow: 0 6px 24px rgba(78,84,200,0.10);
   }
 
+  /* FIX 1: Inter replaces DM Sans; Space Grotesk replaces Syne */
   body {
     background-color: var(--bg);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: #333;
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   /* ── NAVBAR ── */
@@ -36,7 +40,7 @@
     padding: 0.75rem 0;
   }
   .navbar-brand {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
     font-size: 1.8rem;
     color: white;
@@ -51,13 +55,14 @@
     padding: 2.5rem 0 3.5rem;
   }
   .hero h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 800;
     font-size: 2.4rem;
     letter-spacing: -0.5px;
   }
 
   /* ── FILTER TOOLBAR ── */
+  /* FIX 6: Single-line filter bar that scrolls horizontally on small screens */
   .filter-toolbar {
     background: white;
     border-bottom: 1px solid #e9ecef;
@@ -65,44 +70,65 @@
     position: sticky;
     top: 56px;
     z-index: 100;
-    padding: 0.85rem 0;
+    padding: 0.75rem 0;
   }
   .filter-toolbar .container {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    gap: 0;
+    flex-wrap: nowrap;
   }
+  .filter-chips-scroll {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    padding-bottom: 2px; /* avoid scrollbar clipping */
+    scrollbar-width: none;
+  }
+  .filter-chips-scroll::-webkit-scrollbar { display: none; }
+
+  .filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    margin-left: 0.75rem;
+  }
+
   .filter-group-label {
     font-weight: 700;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--primary);
     white-space: nowrap;
+    flex-shrink: 0;
   }
   .filter-separator {
     width: 1px;
-    height: 28px;
+    height: 26px;
     background: #dee2e6;
-    margin: 0 0.4rem;
+    margin: 0 0.35rem;
     flex-shrink: 0;
   }
   .filter-chip {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 0.32rem 0.75rem;
+    gap: 4px;
+    padding: 0.28rem 0.65rem;
     border-radius: 20px;
     border: 1.5px solid #dee2e6;
     background: white;
-    font-size: 0.82rem;
-    font-weight: 500;
+    font-size: 0.79rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.18s;
     color: #555;
     user-select: none;
     white-space: nowrap;
+    flex-shrink: 0;
   }
   .filter-chip.active {
     background: var(--primary);
@@ -116,14 +142,14 @@
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
     border: none;
-    padding: 0.42rem 1.3rem;
+    padding: 0.4rem 1.2rem;
     border-radius: 20px;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     transition: transform 0.15s, box-shadow 0.15s;
     white-space: nowrap;
     cursor: pointer;
-    margin-left: auto;
+    flex-shrink: 0;
   }
   .apply-btn:hover {
     transform: scale(1.04);
@@ -134,13 +160,14 @@
     background: transparent;
     color: #888;
     border: 1.5px solid #dee2e6;
-    padding: 0.38rem 1rem;
+    padding: 0.36rem 0.85rem;
     border-radius: 20px;
     font-weight: 500;
-    font-size: 0.82rem;
+    font-size: 0.79rem;
     cursor: pointer;
     transition: all 0.15s;
     white-space: nowrap;
+    flex-shrink: 0;
   }
   .clear-btn:hover { border-color: #aaa; color: #555; }
 
@@ -210,30 +237,39 @@
   .header-scratch{ background: linear-gradient(135deg,#fff7ed,#fef9c3); }
   .header-tynker { background: linear-gradient(135deg,#fdf2f8,#fbcfe8); }
   .header-swift  { background: linear-gradient(135deg,#fff7ed,#ffedd5); }
+
   .tool-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.45rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.35rem;
     font-weight: 800;
     margin-bottom: 0.2rem;
     color: var(--dark);
   }
 
-  /* ── FLAME BADGE ── */
+  /* ── FLAME BADGE — sits above the card, never overlaid ── */
   .flame-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: white;
-    border-radius: 20px;
-    padding: 0.22rem 0.65rem;
-    font-size: 1.05rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     display: none;
-    line-height: 1.4;
-    letter-spacing: 1px;
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: 1;
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+    padding: 0.3rem 0;
+    /* no absolute positioning — flows naturally above the card */
   }
 
-  .tool-info { padding: 1.25rem 1.4rem 1.4rem; }
+  /* FIX 2: tool-info uses Inter with proper sizing and overflow handling */
+  .tool-info { padding: 1.2rem 1.3rem 1.3rem; }
+  .tool-info p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 0;
+  }
+  .tool-info small {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
 
   .compatibility-tag {
     display: inline-block;
@@ -243,8 +279,10 @@
     font-size: 0.76rem;
     background-color: #eef0ff;
     color: var(--primary);
-    font-weight: 500;
+    font-weight: 600;
   }
+
+  /* FIX 5: Teaching style badges are clickable and show a tooltip */
   .philosophy-badge {
     display: inline-block;
     padding: 0.28rem 0.7rem;
@@ -253,8 +291,98 @@
     font-size: 0.78rem;
     background-color: var(--primary);
     color: white;
-    font-weight: 500;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    border: none;
+    outline: none;
+    position: relative;
   }
+  .philosophy-badge:hover {
+    background-color: #3a3fb5;
+    transform: scale(1.04);
+  }
+  .philosophy-badge::after {
+    content: " ⓘ";
+    font-size: 0.7rem;
+    opacity: 0.75;
+  }
+
+  /* Teaching Style Popup */
+  .teaching-style-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+  }
+  .teaching-style-popup.visible { display: block; }
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 9998;
+  }
+  .popup-overlay.visible { display: block; }
+  .popup-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    margin: 0 auto 1rem;
+  }
+  .popup-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+  .popup-desc {
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: #555;
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+  .popup-example {
+    background: #f0f2ff;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.84rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+  .popup-close {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 0.55rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .popup-close:hover { transform: scale(1.03); }
 
   .difficulty { display: flex; margin-bottom: 6px; }
   .difficulty-dot {
@@ -282,6 +410,18 @@
     color: white;
   }
 
+  /* ── DIMMED (non-matching) cards ── */
+  .tool-card-wrapper.dim-card {
+    opacity: 0.35;
+    filter: grayscale(60%);
+    transition: opacity 0.3s, filter 0.3s;
+    pointer-events: none;
+  }
+  .tool-card-wrapper.dim-card .tool-card:hover {
+    transform: none;
+    box-shadow: var(--card-shadow);
+  }
+
   /* ── NO RESULTS ── */
   #no-results {
     display: none;
@@ -291,14 +431,27 @@
   }
   #no-results i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
 
-  /* ── MODAL ── */
-  .modal-content { border-radius: 16px; border: none; }
+  /* FIX 2: Modal body — proper font sizing and overflow to prevent text collision */
+  .modal-content { border-radius: 16px; border: none; font-family: 'Inter', sans-serif; }
   .modal-header {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
     border-radius: 16px 16px 0 0;
   }
-  .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; }
+  .modal-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+  }
+  .modal-body {
+    overflow: auto;
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+  .modal-body h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; }
+  .modal-body h5 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.97rem; }
+  .modal-body p { font-size: 0.91rem; line-height: 1.65; }
+  .modal-body .list-group-item { font-size: 0.88rem; padding-top: 0.45rem; padding-bottom: 0.45rem; }
+
   .match-btn {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white; border: none;
@@ -333,10 +486,23 @@
 </head>
 <body>
 
+<!-- Teaching Style Popup Overlay -->
+<div class="popup-overlay" id="popupOverlay"></div>
+
+<!-- Teaching Style Popup -->
+<div class="teaching-style-popup" id="teachingStylePopup">
+  <div class="popup-icon" id="popupIcon"><i class="fas fa-star"></i></div>
+  <div class="popup-title" id="popupTitle">Teaching Style</div>
+  <div class="popup-desc" id="popupDesc"></div>
+  <div class="popup-example" id="popupExample"></div>
+  <button class="popup-close" onclick="closeTeachingPopup()">Got it!</button>
+</div>
+
 <!-- NAVBAR -->
+<!-- FIX 3: Renamed to DataToolTechMatch -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="#"><i class="fas fa-chart-line me-2"></i>DataMatch</a>
+    <a class="navbar-brand" href="#"><i class="fas fa-chart-line me-2"></i>DataToolTechMatch</a>
   </div>
 </nav>
 
@@ -348,36 +514,39 @@
   </div>
 </section>
 
-<!-- FILTER TOOLBAR -->
+<!-- FIX 6: Filter bar restructured — chips in a scrollable row, buttons pinned right -->
 <div class="filter-toolbar">
   <div class="container">
-    <span class="filter-group-label">Grade</span>
-    <button class="filter-chip" data-filter="grade" data-value="elementary">Elementary</button>
-    <button class="filter-chip" data-filter="grade" data-value="middle">Middle School</button>
-    <button class="filter-chip" data-filter="grade" data-value="high">High School</button>
-    <button class="filter-chip" data-filter="grade" data-value="higher">Higher Ed</button>
+    <div class="filter-chips-scroll">
+      <span class="filter-group-label">Grade</span>
+      <button class="filter-chip" data-filter="grade" data-value="elementary">Elementary</button>
+      <button class="filter-chip" data-filter="grade" data-value="middle">Middle School</button>
+      <button class="filter-chip" data-filter="grade" data-value="high">High School</button>
+      <button class="filter-chip" data-filter="grade" data-value="higher">Higher Ed</button>
 
-    <div class="filter-separator"></div>
-    <span class="filter-group-label">Time Commitment</span>
-    <button class="filter-chip" data-filter="time" data-value="low">Low (1–2)</button>
-    <button class="filter-chip" data-filter="time" data-value="medium">Medium (3)</button>
-    <button class="filter-chip" data-filter="time" data-value="high">High (4–5)</button>
+      <div class="filter-separator"></div>
+      <span class="filter-group-label">Time Commitment</span>
+      <button class="filter-chip" data-filter="time" data-value="low">Low (1–2)</button>
+      <button class="filter-chip" data-filter="time" data-value="medium">Medium (3)</button>
+      <button class="filter-chip" data-filter="time" data-value="high">High (4–5)</button>
 
-    <div class="filter-separator"></div>
-    <span class="filter-group-label">Coding</span>
-    <button class="filter-chip" data-filter="coding" data-value="no-code">No Coding</button>
-    <button class="filter-chip" data-filter="coding" data-value="some-code">Some Coding</button>
-    <button class="filter-chip" data-filter="coding" data-value="advanced-code">Advanced</button>
-
-    <button class="clear-btn ms-2" id="clearFilters">Clear</button>
-    <button class="apply-btn" id="applyFilters">Apply Filters</button>
+      <div class="filter-separator"></div>
+      <span class="filter-group-label">Coding</span>
+      <button class="filter-chip" data-filter="coding" data-value="no-code">No Coding</button>
+      <button class="filter-chip" data-filter="coding" data-value="some-code">Some Coding</button>
+      <button class="filter-chip" data-filter="coding" data-value="advanced-code">Advanced</button>
+    </div>
+    <div class="filter-actions">
+      <button class="clear-btn" id="clearFilters">Clear</button>
+      <button class="apply-btn" id="applyFilters">Apply Filters</button>
+    </div>
   </div>
 </div>
 
 <!-- MAIN CONTENT -->
 <div class="container mt-5">
   <div class="d-flex align-items-center justify-content-between mb-1">
-    <h2 style="font-family:'Syne',sans-serif;font-weight:800;">Browse Data Science Tools</h2>
+    <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Browse Data Science Tools</h2>
   </div>
   <div id="results-summary"></div>
   <div class="row" id="tools-grid">
@@ -386,12 +555,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="true" data-high="true" data-higher="false"
          data-time="2" data-coding="1">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-codap"></div>
+      <div class="flame-badge" id="flame-codap"></div>
+      <div class="card tool-card">
         <div class="tool-header header-indigo">
           <div class="tool-icon icon-indigo"><i class="fas fa-chart-pie"></i></div>
           <h3 class="tool-name">CODAP</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Common Online Data Analysis Platform</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Common Online Data Analysis Platform</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -401,12 +570,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Free, intuitive platform for exploring and visualizing data. No login required — great for storytelling with data.</p>
+            <p>Free, intuitive platform for exploring and visualizing data. No login required — great for storytelling with data.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Storyteller</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('storyteller')">The Storyteller</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -431,12 +600,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="true" data-high="true" data-higher="true"
          data-time="3" data-coding="3">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-jupyter"></div>
+      <div class="flame-badge" id="flame-jupyter"></div>
+      <div class="card tool-card">
         <div class="tool-header header-orange">
           <div class="tool-icon icon-orange"><i class="fas fa-code"></i></div>
           <h3 class="tool-name">Jupyter Everywhere</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Interactive Computing</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Interactive Computing</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -447,12 +616,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Free platform for those ready to code. Supports Python and balances coding with data analysis features.</p>
+            <p>Free platform for those ready to code. Supports Python and balances coding with data analysis features.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -477,12 +646,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="true" data-high="true" data-higher="true"
          data-time="3" data-coding="1">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-sheets"></div>
+      <div class="flame-badge" id="flame-sheets"></div>
+      <div class="card tool-card">
         <div class="tool-header header-green">
           <div class="tool-icon icon-green"><i class="fas fa-table"></i></div>
           <h3 class="tool-name">Google Sheets</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Collaborative Spreadsheets</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Collaborative Spreadsheets</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -493,12 +662,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Accessible and collaborative. Integrates perfectly with Google Classroom and supports a variety of teaching styles.</p>
+            <p>Accessible and collaborative. Integrates perfectly with Google Classroom and supports a variety of teaching styles.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Problem Solver</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('problem-solver')">The Problem Solver</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -523,12 +692,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="true" data-high="true" data-higher="true"
          data-time="3" data-coding="1">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-excel"></div>
+      <div class="flame-badge" id="flame-excel"></div>
+      <div class="card tool-card">
         <div class="tool-header header-xgreen">
           <div class="tool-icon icon-xgreen"><i class="fas fa-file-excel"></i></div>
           <h3 class="tool-name">Excel</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Powerful Spreadsheet Analysis</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Powerful Spreadsheet Analysis</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -539,12 +708,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Industry standard with free and paid options. Integrates with most LMS platforms and provides powerful data analysis tools.</p>
+            <p>Industry standard with free and paid options. Integrates with most LMS platforms and provides powerful data analysis tools.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -569,12 +738,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="false" data-high="true" data-higher="true"
          data-time="4" data-coding="1">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-knime"></div>
+      <div class="flame-badge" id="flame-knime"></div>
+      <div class="card tool-card">
         <div class="tool-header header-teal">
           <div class="tool-icon icon-teal"><i class="fas fa-project-diagram"></i></div>
           <h3 class="tool-name">KNIME</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Visual Workflow Platform</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Visual Workflow Platform</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -584,12 +753,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Visual data science workflows with a steeper teacher learning curve. Completely free with no coding required.</p>
+            <p>Visual data science workflows with a steeper teacher learning curve. Completely free with no coding required.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -614,12 +783,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="true" data-middle="true" data-high="true" data-higher="false"
          data-time="1" data-coding="1">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-slowreveal"></div>
+      <div class="flame-badge" id="flame-slowreveal"></div>
+      <div class="card tool-card">
         <div class="tool-header header-red">
           <div class="tool-icon icon-red"><i class="fas fa-chart-line"></i></div>
           <h3 class="tool-name">Slow Reveal Graph</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Gradual Data Visualization</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Gradual Data Visualization</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -630,12 +799,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Easiest tool to implement with minimal prep. Focuses on visualization and storytelling across all curriculum areas.</p>
+            <p>Easiest tool to implement with minimal prep. Focuses on visualization and storytelling across all curriculum areas.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Storyteller</span>
-            <span class="philosophy-badge">Interdisciplinary Partner</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('storyteller')">The Storyteller</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('interdisciplinary')">Interdisciplinary Partner</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -660,12 +829,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="false" data-high="true" data-higher="true"
          data-time="4" data-coding="1">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-rapidminer"></div>
+      <div class="flame-badge" id="flame-rapidminer"></div>
+      <div class="card tool-card">
         <div class="tool-header header-violet">
           <div class="tool-icon icon-violet"><i class="fas fa-robot"></i></div>
           <h3 class="tool-name">RapidMiner</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">AI & Machine Learning Platform</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">AI & Machine Learning Platform</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -675,12 +844,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Visual drag-and-drop ML platform. No coding required to build machine learning models and data pipelines.</p>
+            <p>Visual drag-and-drop ML platform. No coding required to build machine learning models and data pipelines.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -705,12 +874,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="false" data-high="true" data-higher="true"
          data-time="3" data-coding="4">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-plotly"></div>
+      <div class="flame-badge" id="flame-plotly"></div>
+      <div class="card tool-card">
         <div class="tool-header header-blue">
           <div class="tool-icon icon-blue"><i class="fas fa-chart-area"></i></div>
           <h3 class="tool-name">Plotly</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Interactive Data Visualization</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Interactive Data Visualization</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -720,12 +889,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Python/JavaScript library for creating stunning interactive charts. Requires coding but produces professional-grade visuals.</p>
+            <p>Python/JavaScript library for creating stunning interactive charts. Requires coding but produces professional-grade visuals.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Storyteller</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('storyteller')">The Storyteller</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -750,12 +919,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="false" data-high="true" data-higher="true"
          data-time="3" data-coding="1">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-tableau"></div>
+      <div class="flame-badge" id="flame-tableau"></div>
+      <div class="card tool-card">
         <div class="tool-header header-amber">
           <div class="tool-icon icon-amber"><i class="fas fa-th-large"></i></div>
           <h3 class="tool-name">Tableau</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Business Intelligence & Visualization</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Business Intelligence & Visualization</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -765,12 +934,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Industry-leading drag-and-drop visualization tool. Free via Tableau Public — creates polished dashboards with no coding.</p>
+            <p>Industry-leading drag-and-drop visualization tool. Free via Tableau Public — creates polished dashboards with no coding.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Storyteller</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('storyteller')">The Storyteller</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -795,12 +964,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="false" data-high="true" data-higher="true"
          data-time="4" data-coding="4">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-pyscript"></div>
+      <div class="flame-badge" id="flame-pyscript"></div>
+      <div class="card tool-card">
         <div class="tool-header header-navy">
           <div class="tool-icon icon-navy"><i class="fab fa-python"></i></div>
           <h3 class="tool-name">PyScript</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Python in the Browser</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Python in the Browser</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -810,12 +979,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Run Python directly in the browser without any installation. Free and cutting-edge — ideal for advanced coders learning data science.</p>
+            <p>Run Python directly in the browser without any installation. Free and cutting-edge — ideal for advanced coders learning data science.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -840,12 +1009,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="false" data-middle="false" data-high="true" data-higher="true"
          data-time="3" data-coding="3">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-deepnote"></div>
+      <div class="flame-badge" id="flame-deepnote"></div>
+      <div class="card tool-card">
         <div class="tool-header header-slate">
           <div class="tool-icon icon-slate"><i class="fas fa-satellite-dish"></i></div>
           <h3 class="tool-name">Deepnote</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Collaborative Data Notebooks</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Collaborative Data Notebooks</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -855,12 +1024,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Cloud-based collaborative notebook — like Jupyter but built for teams. Free for education with real-time co-editing and no setup required.</p>
+            <p>Cloud-based collaborative notebook — like Jupyter but built for teams. Free for education with real-time co-editing and no setup required.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -885,12 +1054,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="true" data-middle="true" data-high="false" data-higher="false"
          data-time="2" data-coding="2">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-scratch"></div>
+      <div class="flame-badge" id="flame-scratch"></div>
+      <div class="card tool-card">
         <div class="tool-header header-scratch">
           <div class="tool-icon icon-scratch"><i class="fas fa-cat"></i></div>
           <h3 class="tool-name">Scratch</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Block-Based Visual Programming</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Block-Based Visual Programming</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -900,12 +1069,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">MIT's free block-based programming platform. Students snap code blocks together to create interactive stories, animations, and data projects — no typing required.</p>
+            <p>MIT's free block-based programming platform. Students snap code blocks together to create interactive stories, animations, and data projects — no typing required.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Storyteller</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('storyteller')">The Storyteller</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -930,12 +1099,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="true" data-middle="true" data-high="false" data-higher="false"
          data-time="2" data-coding="2">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-tynker"></div>
+      <div class="flame-badge" id="flame-tynker"></div>
+      <div class="card tool-card">
         <div class="tool-header header-tynker">
           <div class="tool-icon icon-tynker"><i class="fas fa-magic"></i></div>
           <h3 class="tool-name">Tynker</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Guided Coding for Kids</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Guided Coding for Kids</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -945,12 +1114,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Game-based coding platform with guided courses. Bridges block coding and Python, with a built-in curriculum teachers can assign and track.</p>
+            <p>Game-based coding platform with guided courses. Bridges block coding and Python, with a built-in curriculum teachers can assign and track.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Problem Solver</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('problem-solver')">The Problem Solver</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -975,12 +1144,12 @@
     <div class="col-md-6 col-lg-4 tool-card-wrapper"
          data-elementary="true" data-middle="true" data-high="true" data-higher="false"
          data-time="3" data-coding="3">
-      <div class="card tool-card position-relative">
-        <div class="flame-badge" id="flame-swift"></div>
+      <div class="flame-badge" id="flame-swift"></div>
+      <div class="card tool-card">
         <div class="tool-header header-swift">
           <div class="tool-icon icon-swift"><i class="fab fa-swift"></i></div>
           <h3 class="tool-name">Swift Playgrounds</h3>
-          <p class="text-muted mb-0" style="font-size:0.85rem;">Learn to Code on iPad & Mac</p>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Learn to Code on iPad & Mac</p>
         </div>
         <div class="tool-info">
           <div class="mb-2">
@@ -991,12 +1160,12 @@
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">About</small>
-            <p style="font-size:0.87rem;margin-bottom:0;">Apple's free app for learning Swift through interactive puzzles. Ideal for iPad classrooms — starts with visual concepts and progresses to real code.</p>
+            <p>Apple's free app for learning Swift through interactive puzzles. Ideal for iPad classrooms — starts with visual concepts and progresses to real code.</p>
           </div>
           <div class="mb-2">
             <small class="text-muted d-block mb-1">Teaching Style</small>
-            <span class="philosophy-badge">The Coder</span>
-            <span class="philosophy-badge">The Investigator</span>
+            <button class="philosophy-badge" onclick="showTeachingStyle('coder')">The Coder</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
           </div>
           <div class="mb-1">
             <small class="text-muted">Coding Needed</small>
@@ -1017,6 +1186,98 @@
       </div>
     </div>
 
+    <!-- ═══ ORANGE DATA MINING ═══ -->
+    <div class="col-md-6 col-lg-4 tool-card-wrapper"
+         data-elementary="false" data-middle="true" data-high="true" data-higher="true"
+         data-time="3" data-coding="1">
+      <div class="flame-badge" id="flame-orange"></div>
+      <div class="card tool-card">
+        <div class="tool-header" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);">
+          <div class="tool-icon" style="background:linear-gradient(135deg,#ea580c,#f97316);box-shadow:0 4px 16px rgba(234,88,12,0.30);"><i class="fas fa-project-diagram"></i></div>
+          <h3 class="tool-name">Orange Data Mining</h3>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Visual Machine Learning & Analytics</p>
+        </div>
+        <div class="tool-info">
+          <div class="mb-2">
+            <small class="text-muted d-block mb-1">Grade Levels</small>
+            <span class="compatibility-tag">Middle</span>
+            <span class="compatibility-tag">High School</span>
+            <span class="compatibility-tag">Higher Ed</span>
+          </div>
+          <div class="mb-2">
+            <small class="text-muted d-block mb-1">About</small>
+            <p>Free visual tool for data mining and machine learning. Drag-and-drop workflows make AI/ML concepts accessible — no coding required.</p>
+          </div>
+          <div class="mb-2">
+            <small class="text-muted d-block mb-1">Teaching Style</small>
+            <button class="philosophy-badge" onclick="showTeachingStyle('storyteller')">The Storyteller</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('problem-solver')">The Problem Solver</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('investigator')">The Investigator</button>
+          </div>
+          <div class="mb-1">
+            <small class="text-muted">Coding Needed</small>
+            <div class="difficulty">
+              <div class="difficulty-dot active"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <small class="text-muted">Time Commitment</small>
+            <div class="difficulty">
+              <div class="difficulty-dot active"></div><div class="difficulty-dot active"></div><div class="difficulty-dot active"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn view-btn" data-bs-toggle="modal" data-bs-target="#orangeModal">View Full Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VOYANT ═══ -->
+    <div class="col-md-6 col-lg-4 tool-card-wrapper"
+         data-elementary="false" data-middle="true" data-high="true" data-higher="false"
+         data-time="2" data-coding="2">
+      <div class="flame-badge" id="flame-voyant"></div>
+      <div class="card tool-card">
+        <div class="tool-header" style="background:linear-gradient(135deg,#f0fdfa,#a5f3fc);">
+          <div class="tool-icon" style="background:linear-gradient(135deg,#0e7490,#22d3ee);box-shadow:0 4px 16px rgba(14,116,144,0.30);"><i class="fas fa-language"></i></div>
+          <h3 class="tool-name">Voyant</h3>
+          <p class="text-muted mb-0" style="font-size:0.83rem;">Text Analysis & Visualization</p>
+        </div>
+        <div class="tool-info">
+          <div class="mb-2">
+            <small class="text-muted d-block mb-1">Grade Levels</small>
+            <span class="compatibility-tag">Middle</span>
+            <span class="compatibility-tag">High School</span>
+          </div>
+          <div class="mb-2">
+            <small class="text-muted d-block mb-1">About</small>
+            <p>Free web-based text analysis platform. Students paste or upload text to explore patterns, word frequencies, and language data — no login needed.</p>
+          </div>
+          <div class="mb-2">
+            <small class="text-muted d-block mb-1">Teaching Style</small>
+            <button class="philosophy-badge" onclick="showTeachingStyle('storyteller')">The Storyteller</button>
+            <button class="philosophy-badge" onclick="showTeachingStyle('interdisciplinary')">Interdisciplinary Partner</button>
+          </div>
+          <div class="mb-1">
+            <small class="text-muted">Coding Needed</small>
+            <div class="difficulty">
+              <div class="difficulty-dot active"></div><div class="difficulty-dot active"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <small class="text-muted">Time Commitment</small>
+            <div class="difficulty">
+              <div class="difficulty-dot active"></div><div class="difficulty-dot active"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div><div class="difficulty-dot"></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn view-btn" data-bs-toggle="modal" data-bs-target="#voyantModal">View Full Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /tools-grid -->
 
   <div id="no-results">
@@ -1027,11 +1288,12 @@
 </div><!-- /container -->
 
 <!-- FOOTER -->
+<!-- FIX 3 + FIX 4: Updated name and email -->
 <footer class="footer">
   <div class="container">
     <div class="row">
       <div class="col-md-5">
-        <h4 style="font-family:'Syne',sans-serif;font-weight:800;"><i class="fas fa-chart-line me-2" style="color:#ffd166;"></i>DataMatch</h4>
+        <h4 style="font-family:'Space Grotesk',sans-serif;font-weight:800;"><i class="fas fa-chart-line me-2" style="color:#ffd166;"></i>DataToolTechMatch</h4>
         <p style="color:#adb5db;">Helping teachers find their perfect data science tool match since 2025.</p>
       </div>
       <div class="col-md-3 offset-md-1">
@@ -1044,11 +1306,11 @@
       <div class="col-md-3">
         <h5>Contact</h5>
         <p style="color:#adb5db;">Questions or suggestions?</p>
-        <a href="/cdn-cgi/l/email-protection#244d4a424b6440455045494550474c0a414051"><span class="__cf_email__" data-cfemail="751c1b131a3511140114181401161d5b101100">[email&#160;protected]</span></a>
+        <a href="/cdn-cgi/l/email-protection#b8d1d6ded7f8dcd9ccd9cbdbd1ddd6dbdd8cddceddcac1d7d6dd96d7cadf" style="color:#adb5db;"><span class="__cf_email__" data-cfemail="82ebece4edc2e6e3f6e3f1e1ebe7ece1e7b6e7f4e7f0fbedece7acedf0e5">[email&#160;protected]</span></a>
       </div>
     </div>
     <hr style="border-color:#444;">
-    <p class="text-center mb-0" style="color:#adb5db; font-size:0.85rem;">&copy; 2025 DataMatch. All rights reserved.</p>
+    <p class="text-center mb-0" style="color:#adb5db; font-size:0.85rem;">&copy; 2025 DataToolTechMatch. All rights reserved.</p>
   </div>
 </footer>
 
@@ -1069,7 +1331,7 @@
         <div class="row">
           <div class="col-md-4 text-center mb-4">
             <div class="tool-icon mx-auto"><i class="fas fa-chart-pie"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">CODAP</h3>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">CODAP</h3>
             <p class="text-muted">Common Online Data Analysis Platform</p>
             <a href="https://codap.concord.org/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1128,11 +1390,12 @@
         <h5 class="modal-title">Jupyter Everywhere – Complete Profile</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
+      <!-- FIX 2: Explicit overflow-auto and readable Inter font throughout -->
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-code"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Jupyter Everywhere</h3>
+            <div class="tool-icon icon-orange mx-auto"><i class="fas fa-code"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Jupyter Everywhere</h3>
             <p class="text-muted">Interactive Computing</p>
             <a href="https://jupytereverywhere.org" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1194,8 +1457,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-table"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Google Sheets</h3>
+            <div class="tool-icon icon-green mx-auto"><i class="fas fa-table"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Google Sheets</h3>
             <p class="text-muted">Collaborative Spreadsheets</p>
             <a href="https://sheets.google.com/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1257,8 +1520,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-file-excel"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Excel</h3>
+            <div class="tool-icon icon-xgreen mx-auto"><i class="fas fa-file-excel"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Excel</h3>
             <p class="text-muted">Powerful Spreadsheet Analysis</p>
             <a href="https://www.microsoft.com/excel" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1320,8 +1583,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-project-diagram"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">KNIME</h3>
+            <div class="tool-icon icon-teal mx-auto"><i class="fas fa-project-diagram"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">KNIME</h3>
             <p class="text-muted">Visual Workflow Platform</p>
             <a href="https://www.knime.com/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1383,8 +1646,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-chart-line"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Slow Reveal Graph</h3>
+            <div class="tool-icon icon-red mx-auto"><i class="fas fa-chart-line"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Slow Reveal Graph</h3>
             <p class="text-muted">Gradual Data Visualization</p>
             <a href="https://slowrevealgraph.org/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1446,8 +1709,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-robot"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">RapidMiner</h3>
+            <div class="tool-icon icon-violet mx-auto"><i class="fas fa-robot"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">RapidMiner</h3>
             <p class="text-muted">AI & Machine Learning Platform</p>
             <a href="https://rapidminer.com/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1509,8 +1772,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-chart-area"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Plotly</h3>
+            <div class="tool-icon icon-blue mx-auto"><i class="fas fa-chart-area"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Plotly</h3>
             <p class="text-muted">Interactive Data Visualization</p>
             <a href="https://plotly.com/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1572,8 +1835,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-th-large"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Tableau</h3>
+            <div class="tool-icon icon-amber mx-auto"><i class="fas fa-th-large"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Tableau</h3>
             <p class="text-muted">Business Intelligence & Visualization</p>
             <a href="https://public.tableau.com/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1635,8 +1898,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fab fa-python"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">PyScript</h3>
+            <div class="tool-icon icon-navy mx-auto"><i class="fab fa-python"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">PyScript</h3>
             <p class="text-muted">Python in the Browser</p>
             <a href="https://pyscript.net/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1698,8 +1961,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4 text-center mb-4">
-            <div class="tool-icon mx-auto"><i class="fas fa-satellite-dish"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Deepnote</h3>
+            <div class="tool-icon icon-slate mx-auto"><i class="fas fa-satellite-dish"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Deepnote</h3>
             <p class="text-muted">Collaborative Data Notebooks</p>
             <a href="https://deepnote.com/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1750,7 +2013,6 @@
   </div>
 </div>
 
-
 <!-- Scratch Modal -->
 <div class="modal fade" id="scratchModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -1763,7 +2025,7 @@
         <div class="row">
           <div class="col-md-4 text-center mb-4">
             <div class="tool-icon icon-scratch mx-auto"><i class="fas fa-cat"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Scratch</h3>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Scratch</h3>
             <p class="text-muted">Block-Based Visual Programming</p>
             <a href="https://scratch.mit.edu/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1826,7 +2088,7 @@
         <div class="row">
           <div class="col-md-4 text-center mb-4">
             <div class="tool-icon icon-tynker mx-auto"><i class="fas fa-magic"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Tynker</h3>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Tynker</h3>
             <p class="text-muted">Guided Coding for Kids</p>
             <a href="https://www.tynker.com/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1889,7 +2151,7 @@
         <div class="row">
           <div class="col-md-4 text-center mb-4">
             <div class="tool-icon icon-swift mx-auto"><i class="fab fa-swift"></i></div>
-            <h3 class="mt-3" style="font-family:'Syne',sans-serif;font-weight:800;">Swift Playgrounds</h3>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Swift Playgrounds</h3>
             <p class="text-muted">Learn to Code on iPad & Mac</p>
             <a href="https://www.apple.com/swift/playgrounds/" target="_blank" class="btn match-btn">Visit Website</a>
           </div>
@@ -1940,30 +2202,212 @@
   </div>
 </div>
 
+<!-- Orange Data Mining Modal -->
+<div class="modal fade" id="orangeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background:linear-gradient(135deg,#ea580c,#f97316);">
+        <h5 class="modal-title">Orange Data Mining – Complete Profile</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4 text-center mb-4">
+            <div class="tool-icon mx-auto" style="background:linear-gradient(135deg,#ea580c,#f97316);box-shadow:0 4px 16px rgba(234,88,12,0.30);"><i class="fas fa-project-diagram"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Orange Data Mining</h3>
+            <p class="text-muted">Visual Machine Learning & Analytics</p>
+            <a href="https://orangedatamining.com/" target="_blank" class="btn match-btn">Visit Website</a>
+          </div>
+          <div class="col-md-8">
+            <h4>About</h4>
+            <p>Open-source machine learning and data visualization tool using a visual drag-and-drop interface. Students build data workflows to explore datasets, run ML models, and visualize results — all without writing code. Offers robust teacher training and an active educational community.</p>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <h5>Basic Info</h5>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item px-0">Grade Levels — <strong>Middle, High School, Higher Ed</strong></li>
+                  <li class="list-group-item px-0">Student Login — <strong>Required</strong></li>
+                  <li class="list-group-item px-0">Cost — <strong>Completely Free</strong></li>
+                  <li class="list-group-item px-0">LMS Integration — <strong>None</strong></li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h5>Implementation</h5>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item px-0">Coding Knowledge — <strong>1/5 Minimal</strong></li>
+                  <li class="list-group-item px-0">Teacher Time — <strong>3/5 Moderate</strong></li>
+                  <li class="list-group-item px-0">Prep Time — <strong>4/5 High</strong></li>
+                  <li class="list-group-item px-0">Student Data — <strong>Stored Indefinitely</strong></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h5>Data Science Skills</h5>
+              <p>Cleaning, Filtering / Sorting / Grouping, Coding, Analysis, Visualization, AI / ML</p>
+            </div>
+            <div class="mt-3">
+              <h5>Strengths</h5>
+              <ul>
+                <li>Robust teacher training and ongoing support</li>
+                <li>Intuitive, visually engaging interface for students</li>
+                <li>Supports cross-disciplinary subject integration</li>
+                <li>Built-in datasets plus ability to upload your own</li>
+                <li>Full ML pipeline (clustering, classification, regression) without coding</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="https://orangedatamining.com/" target="_blank" class="btn match-btn">Visit Website</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Voyant Modal -->
+<div class="modal fade" id="voyantModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background:linear-gradient(135deg,#0e7490,#22d3ee);">
+        <h5 class="modal-title">Voyant – Complete Profile</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4 text-center mb-4">
+            <div class="tool-icon mx-auto" style="background:linear-gradient(135deg,#0e7490,#22d3ee);box-shadow:0 4px 16px rgba(14,116,144,0.30);"><i class="fas fa-language"></i></div>
+            <h3 class="mt-3" style="font-family:'Space Grotesk',sans-serif;font-weight:800;">Voyant</h3>
+            <p class="text-muted">Text Analysis & Visualization</p>
+            <a href="https://voyant-tools.org/" target="_blank" class="btn match-btn">Visit Website</a>
+          </div>
+          <div class="col-md-8">
+            <h4>About</h4>
+            <p>A free, browser-based text analysis and visualization platform. Students paste or upload any text — novels, speeches, articles, social media — to explore word frequencies, patterns, trends, and linguistic data. No login or installation needed, making it an ideal interdisciplinary tool for ELA, history, and social studies classrooms.</p>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <h5>Basic Info</h5>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item px-0">Grade Levels — <strong>Middle, High School</strong></li>
+                  <li class="list-group-item px-0">Student Login — <strong>Not Required</strong></li>
+                  <li class="list-group-item px-0">Cost — <strong>Completely Free</strong></li>
+                  <li class="list-group-item px-0">LMS Integration — <strong>None</strong></li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h5>Implementation</h5>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item px-0">Coding Knowledge — <strong>2/5 Minimal</strong></li>
+                  <li class="list-group-item px-0">Teacher Time — <strong>2/5 Low</strong></li>
+                  <li class="list-group-item px-0">Prep Time — <strong>4/5 High</strong></li>
+                  <li class="list-group-item px-0">Student Data — <strong>None Collected</strong></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h5>Data Science Skills</h5>
+              <p>Visualization, Communication</p>
+            </div>
+            <div class="mt-3">
+              <h5>Strengths</h5>
+              <ul>
+                <li>Intuitive and visually engaging interface</li>
+                <li>Perfect for ELA, history, and social studies data integration</li>
+                <li>No login or setup — works instantly in any browser</li>
+                <li>Makes text a data source students can actually analyze</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="https://voyant-tools.org/" target="_blank" class="btn match-btn">Visit Website</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════════════
      SCRIPTS
 ═══════════════════════════════════════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+// ══════════════════════════════════════════
+// FIX 5: Teaching Style popup definitions
+// ══════════════════════════════════════════
+var teachingStyles = {
+  'storyteller': {
+    icon: 'fas fa-book-open',
+    title: 'The Storyteller',
+    desc: 'Centers lessons around compelling data narratives. Uses charts and visualizations to reveal real-world stories, spark curiosity, and connect data to human experiences students care about.',
+    example: '💡 Example: "Let\'s look at this graph about climate change — what story is it trying to tell?"'
+  },
+  'investigator': {
+    icon: 'fas fa-search',
+    title: 'The Investigator',
+    desc: 'Guides students through open-ended, inquiry-based exploration of authentic datasets. Students form their own questions and use data to find answers — mimicking how real scientists work.',
+    example: '💡 Example: "Here\'s a dataset on school lunch nutrition. What patterns or questions do you notice?"'
+  },
+  'coder': {
+    icon: 'fas fa-terminal',
+    title: 'The Coder',
+    desc: 'Uses programming and computational thinking as the primary vehicle for learning data science. Students write code to clean, analyze, and visualize data — building real technical skills.',
+    example: '💡 Example: "Today we\'ll write a Python script to find the most common word in 1000 tweets."'
+  },
+  'problem-solver': {
+    icon: 'fas fa-puzzle-piece',
+    title: 'The Problem Solver',
+    desc: 'Applies data science to tackle structured, real-world challenges. Students use data as a tool to diagnose problems, evaluate solutions, and develop actionable recommendations.',
+    example: '💡 Example: "Using city traffic data, design a plan to reduce peak-hour congestion by 20%."'
+  },
+  'interdisciplinary': {
+    icon: 'fas fa-sitemap',
+    title: 'Interdisciplinary Partner',
+    desc: 'Weaves data literacy across subject areas — bringing data skills into science, social studies, ELA, math, and more. Data becomes a shared language across the whole curriculum.',
+    example: '💡 Example: Working with the history teacher to analyze immigration trends during WWI using census data.'
+  }
+};
+
+function showTeachingStyle(key) {
+  var style = teachingStyles[key];
+  if (!style) return;
+  document.getElementById('popupIcon').innerHTML = '<i class="' + style.icon + '"></i>';
+  document.getElementById('popupTitle').textContent = style.title;
+  document.getElementById('popupDesc').textContent = style.desc;
+  document.getElementById('popupExample').textContent = style.example;
+  document.getElementById('teachingStylePopup').classList.add('visible');
+  document.getElementById('popupOverlay').classList.add('visible');
+}
+
+function closeTeachingPopup() {
+  document.getElementById('teachingStylePopup').classList.remove('visible');
+  document.getElementById('popupOverlay').classList.remove('visible');
+}
+
+document.getElementById('popupOverlay').addEventListener('click', closeTeachingPopup);
+
+// ══════════════════════════════════════════
+// Filter chip toggle + fire badge logic
+// ══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function () {
 
-  // ── Chip toggle ──
   document.querySelectorAll('.filter-chip').forEach(function(chip) {
     chip.addEventListener('click', function () {
       this.classList.toggle('active');
     });
   });
 
-  // ── Show/hide flame badge ──
-  function setFlame(card, score) {
+  function setFlame(card, matchedGroups, totalGroups) {
     var badge = card.querySelector('.flame-badge');
     if (!badge) return;
-    if (score >= 90) {
-      badge.textContent = '🔥🔥🔥';
-    } else if (score >= 75) {
-      badge.textContent = '🔥🔥';
+    if (matchedGroups === totalGroups) {
+      badge.textContent = '🔥🔥🔥'; // Best — matches ALL active filter groups
+    } else if (matchedGroups >= totalGroups - 1 && totalGroups > 1) {
+      badge.textContent = '🔥🔥';   // Good — matches all but one group
     } else {
-      badge.textContent = '🔥';
+      badge.textContent = '🔥';     // Partial — matches at least one group
     }
     badge.style.display = 'block';
   }
@@ -1973,109 +2417,98 @@ document.addEventListener('DOMContentLoaded', function () {
     if (badge) badge.style.display = 'none';
   }
 
-  // ── Match score ──
-  function calcScore(card, grades, times, codings) {
-    var score = 60;
+  // How many active filter groups does this card match?
+  function countMatchedGroups(card, grades, times, codings) {
+    var matched = 0;
 
     if (grades.length > 0) {
-      var gradeHit = grades.some(function(g) { return card.getAttribute('data-' + g) === 'true'; });
-      if (gradeHit) score += 15;
-    } else { score += 10; }
+      if (grades.some(function(g) { return card.getAttribute('data-' + g) === 'true'; })) matched++;
+    }
 
-    var cardTime = parseInt(card.getAttribute('data-time'), 10);
     if (times.length > 0) {
-      var timeHit = times.some(function(t) {
+      var cardTime = parseInt(card.getAttribute('data-time'), 10);
+      if (times.some(function(t) {
         if (t === 'low') return cardTime <= 2;
         if (t === 'medium') return cardTime === 3;
         if (t === 'high') return cardTime >= 4;
         return false;
-      });
-      if (timeHit) score += 15;
-    } else { score += 10; }
+      })) matched++;
+    }
 
-    var cardCoding = parseInt(card.getAttribute('data-coding'), 10);
     if (codings.length > 0) {
-      var codeHit = codings.some(function(c) {
+      var cardCoding = parseInt(card.getAttribute('data-coding'), 10);
+      if (codings.some(function(c) {
         if (c === 'no-code') return cardCoding === 1;
         if (c === 'some-code') return cardCoding === 2 || cardCoding === 3;
         if (c === 'advanced-code') return cardCoding >= 4;
         return false;
-      });
-      if (codeHit) score += 15;
-    } else { score += 10; }
+      })) matched++;
+    }
 
-    return Math.min(score, 99);
+    return matched;
   }
 
-  // ── Run filters (named differently from the button ID) ──
+  // Show ALL cards; rank with flames; dim non-matching; sort best-first
   function runFilter() {
     var grades  = Array.prototype.slice.call(document.querySelectorAll('.filter-chip.active[data-filter="grade"]')).map(function(b){ return b.getAttribute('data-value'); });
     var times   = Array.prototype.slice.call(document.querySelectorAll('.filter-chip.active[data-filter="time"]')).map(function(b){ return b.getAttribute('data-value'); });
     var codings = Array.prototype.slice.call(document.querySelectorAll('.filter-chip.active[data-filter="coding"]')).map(function(b){ return b.getAttribute('data-value'); });
 
-    var hasFilters = grades.length > 0 || times.length > 0 || codings.length > 0;
-    var cards = document.querySelectorAll('.tool-card-wrapper');
-    var visibleCount = 0;
+    var totalGroups = (grades.length > 0 ? 1 : 0) + (times.length > 0 ? 1 : 0) + (codings.length > 0 ? 1 : 0);
+    var hasFilters = totalGroups > 0;
 
+    var grid = document.getElementById('tools-grid');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.tool-card-wrapper'));
+    var bestCount = 0;
+
+    // Score every card and attach match count
     cards.forEach(function(card) {
-      var show = true;
+      card.style.display = '';
+      if (hasFilters) {
+        var matched = countMatchedGroups(card, grades, times, codings);
+        card._matchScore = matched;
 
-      if (grades.length > 0) {
-        var gradeOk = grades.some(function(g) { return card.getAttribute('data-' + g) === 'true'; });
-        if (!gradeOk) show = false;
-      }
-
-      if (show && times.length > 0) {
-        var cardTime = parseInt(card.getAttribute('data-time'), 10);
-        var timeOk = times.some(function(t) {
-          if (t === 'low') return cardTime <= 2;
-          if (t === 'medium') return cardTime === 3;
-          if (t === 'high') return cardTime >= 4;
-          return false;
-        });
-        if (!timeOk) show = false;
-      }
-
-      if (show && codings.length > 0) {
-        var cardCoding = parseInt(card.getAttribute('data-coding'), 10);
-        var codeOk = codings.some(function(c) {
-          if (c === 'no-code') return cardCoding === 1;
-          if (c === 'some-code') return cardCoding === 2 || cardCoding === 3;
-          if (c === 'advanced-code') return cardCoding >= 4;
-          return false;
-        });
-        if (!codeOk) show = false;
-      }
-
-      card.style.display = show ? '' : 'none';
-
-      if (show) {
-        visibleCount++;
-        if (hasFilters) {
-          setFlame(card, calcScore(card, grades, times, codings));
+        if (matched === totalGroups) {
+          // Perfect match
+          card.classList.remove('dim-card');
+          setFlame(card, matched, totalGroups);
+          bestCount++;
+        } else if (matched > 0) {
+          // Partial match — show dimmed with fewer flames
+          card.classList.remove('dim-card');
+          setFlame(card, matched, totalGroups);
         } else {
+          // No match — dim it, no flame
+          card.classList.add('dim-card');
           hideFlame(card);
         }
       } else {
+        card._matchScore = 0;
+        card.classList.remove('dim-card');
         hideFlame(card);
       }
     });
 
+    // Sort: best matches (🔥🔥🔥) first, then partial, then non-matching
+    if (hasFilters) {
+      cards.sort(function(a, b) { return (b._matchScore || 0) - (a._matchScore || 0); });
+      cards.forEach(function(card) { grid.appendChild(card); });
+    }
+
     var noResults = document.getElementById('no-results');
-    if (noResults) noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    if (noResults) noResults.style.display = 'none'; // always show cards
 
     var summary = document.getElementById('results-summary');
     if (summary) {
       if (hasFilters) {
         summary.style.display = 'block';
-        summary.innerHTML = '<i class="fas fa-filter me-2"></i>Showing <strong>' + visibleCount + '</strong> of <strong>' + cards.length + '</strong> tools \u2014 \uD83D\uDD25\uD83D\uDD25\uD83D\uDD25 = Best match &nbsp;|&nbsp; \uD83D\uDD25\uD83D\uDD25 = Good match &nbsp;|&nbsp; \uD83D\uDD25 = Partial match';
+        summary.innerHTML = '<i class="fas fa-filter me-2"></i><strong>' + bestCount + '</strong> best match' + (bestCount !== 1 ? 'es' : '') + ' out of <strong>' + cards.length + '</strong> tools &mdash; 🔥🔥🔥 = Best match &nbsp;|&nbsp; 🔥🔥 = Good match &nbsp;|&nbsp; 🔥 = Partial match';
       } else {
         summary.style.display = 'none';
       }
     }
   }
 
-  // ── Wire up buttons ──
   document.getElementById('applyFilters').addEventListener('click', runFilter);
 
   document.getElementById('clearFilters').addEventListener('click', function () {
@@ -2086,6 +2519,9 @@ document.addEventListener('DOMContentLoaded', function () {
       card.style.display = '';
       hideFlame(card);
     });
+    document.querySelectorAll('.tool-card-wrapper').forEach(function(card) {
+      card.classList.remove('dim-card');
+    });
     var noResults = document.getElementById('no-results');
     if (noResults) noResults.style.display = 'none';
     var summary = document.getElementById('results-summary');
@@ -2094,3 +2530,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+</body>
+</html>
